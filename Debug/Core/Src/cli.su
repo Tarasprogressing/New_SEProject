@@ -1,0 +1,2 @@
+../Core/Src/cli.c:9:6:uart_send	16	static
+../Core/Src/cli.c:14:6:command_processor	32	static
