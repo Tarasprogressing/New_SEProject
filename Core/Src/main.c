@@ -49,6 +49,13 @@
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+uint8_t rxChar;
+
+char rxBuffer[50];
+
+uint8_t rxIndex = 0;
+
+uint8_t commandReady = 0;
 
 /* USER CODE END PV */
 
@@ -56,7 +63,6 @@ UART_HandleTypeDef huart2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -72,11 +78,9 @@ static void MX_USART2_UART_Init(void);
   */
 int main(void)
 {
-	LED_t led;
-	Button_t button;
 
   /* USER CODE BEGIN 1 */
-
+	LED_t led;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -100,20 +104,27 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   LED_Init(&led, GPIOC, GPIO_PIN_10);
-  Button_Init(&button, GPIOC, GPIO_PIN_11);
 
- LED_StartBlink(&led, 50, 200);
+  MX_USART2_UART_Init();
+
+  HAL_UART_Receive_IT(&huart2, &rxChar, 1);
+
+
+  //Button_Init(&button, GPIOC, GPIO_PIN_11);
+
+  //LED_StartBlink(&led, 50, 200);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  Button_Update(&button);
+	  //Button_Update(&button);
 
 	  LED_Update(&led);
 
-	  ButtonEvent_t event = Button_GetEvent(&button);
+	 /* ButtonEvent_t event = Button_GetEvent(&button);
 
 	  if(event == BUTTON_SHORT)
 	  {
@@ -126,6 +137,13 @@ int main(void)
 	  {
 		  uart_send("LONG\r\n");
 		  LED_StartBlink(&led, 50, 200);
+	  }*/
+
+	  if(commandReady)
+	  {
+		  command_processor(rxBuffer, &led);
+
+		  commandReady = 0;
 	  }
     /* USER CODE END WHILE */
 
@@ -271,7 +289,28 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
 
+	if(huart->Instance == USART2)
+	{
+		if(rxChar == '\r' || rxChar == '\n')
+		{
+			rxBuffer[rxIndex] = '\0';
+
+			commandReady = 1;
+
+			rxIndex = 0;
+		}
+
+		else
+		{
+			rxBuffer[rxIndex++] = rxChar;
+		}
+
+		HAL_UART_Receive_IT(&huart2, &rxChar, 1);
+	}
+}
 
 /* USER CODE END 4 */
 

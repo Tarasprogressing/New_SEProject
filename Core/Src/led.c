@@ -6,10 +6,15 @@ void LED_Init(LED_t* led, GPIO_TypeDef* port, uint16_t pin)
 {
 	led->GPIO_Port = port;
 	led->GPIO_Pin = pin;
+
 	led->state = 0;
 	led->lastToggleTime = 0;
+
 	led->blinkInterval = 0;
 	led->blinking = 0;
+
+	led->blinkCount = 0;
+	led->currentBlink = 0;
 }
 
 void LED_On(LED_t* led)
