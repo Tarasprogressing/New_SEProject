@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "LED.h"
 
 uint32_t ledMode = 0;
 
@@ -13,15 +14,32 @@ void uart_send(const char* msg)
 
 void command_processor(char* cmd, LED_t *led)
 {
-	if(strcmp(cmd, "mode 0") == 0)
+	if(strcmp(cmd, "led on") == 0)
 	{
-		ledMode = 0;
+		LED_StopBlink(led);
+		LED_On(led);
 	}
 
-	else if(strcmp(cmd, "mode 1") == 0)
-		{
-			ledMode = 1;
-		}
+	else if(strcmp(cmd, "led off") == 0)
+	{
+		LED_StopBlink(led);
+		LED_Off(led);
+	}
+
+	else if(strcmp(cmd, "help") == 0)
+	{
+		uart_send("Available commands: \r\n"
+				"led on;\r\n"
+				"led off;\r\n"
+				"help;\r\n"
+				"status;\r\n"
+				"blink c d;\r\n");
+	}
+
+	else if(strcmp(cmd, "status") == 0)
+	{
+		uart_send("The System is in order \r\n");
+	}
 
 	else if(strncmp(cmd, "blink ", 6) == 0)
 	{

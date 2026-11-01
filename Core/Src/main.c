@@ -124,7 +124,7 @@ int main(void)
 
 	  LED_Update(&led);
 
-	 /* ButtonEvent_t event = Button_GetEvent(&button);
+	/* ButtonEvent_t event = Button_GetEvent(&button);
 
 	  if(event == BUTTON_SHORT)
 	  {
