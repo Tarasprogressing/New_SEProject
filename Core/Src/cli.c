@@ -14,6 +14,10 @@ void uart_send(const char* msg)
 
 void command_processor(char* cmd, LED_t *led)
 {
+	uart_send("CMD=");
+	uart_send(cmd);
+	uart_send("\r\n");
+
 	if(strcmp(cmd, "led on") == 0)
 	{
 		LED_StopBlink(led);
@@ -28,17 +32,31 @@ void command_processor(char* cmd, LED_t *led)
 
 	else if(strcmp(cmd, "help") == 0)
 	{
-		uart_send("Available commands: \r\n"
-				"led on;\r\n"
-				"led off;\r\n"
-				"help;\r\n"
-				"status;\r\n"
-				"blink c d;\r\n");
+		uart_send("Available commands: \r\n");
+		uart_send("led on;\r\n");
+		uart_send("led off;\r\n");
+		uart_send("toggle;\r\n");
+		uart_send("help;\r\n");
+		uart_send("status;\r\n");
+		uart_send("blink c d;\r\n");
 	}
 
 	else if(strcmp(cmd, "status") == 0)
 	{
-		uart_send("The System is in order \r\n");
+
+		char msg[200];
+
+		snprintf(msg, sizeof(msg), "LED state: %s\r\n" "Blinking: %s\r\n" "Interval: %lu\r\n" "Current blink: %lu\r\n" "Target blink: %lu\r\n",
+				led->state ? "ON" : "OFF", led->blinking ? "YES" : "NO", led->blinkInterval, led->currentBlink, led->blinkCount);
+
+		uart_send(msg);
+
+	}
+
+	else if(strcmp(cmd, "toggle") == 0)
+	{
+		LED_StopBlink(led);
+		LED_Toggle(led);
 	}
 
 	else if(strncmp(cmd, "blink ", 6) == 0)

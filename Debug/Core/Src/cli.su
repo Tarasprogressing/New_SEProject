@@ -1,2 +1,2 @@
 ../Core/Src/cli.c:10:6:uart_send	16	static
-../Core/Src/cli.c:15:6:command_processor	88	static
+../Core/Src/cli.c:15:6:command_processor	256	static

@@ -20,11 +20,15 @@ void LED_Init(LED_t* led, GPIO_TypeDef* port, uint16_t pin)
 void LED_On(LED_t* led)
 {
 	HAL_GPIO_WritePin(led->GPIO_Port, led->GPIO_Pin, GPIO_PIN_SET);
+
+	led->state = 1;
 }
 
 void LED_Off(LED_t* led)
 {
 	HAL_GPIO_WritePin(led->GPIO_Port, led->GPIO_Pin, GPIO_PIN_RESET);
+
+	led->state = 0;
 }
 
 void LED_Toggle(LED_t* led)
