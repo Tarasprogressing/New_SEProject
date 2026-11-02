@@ -27,6 +27,7 @@
 #include "LED.h"
 #include "BUTTON.h"
 #include "CLI.h"
+#include "timer.h"
 
 /* USER CODE END Includes */
 
@@ -81,6 +82,9 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 	LED_t led;
+	LED_t led_r;
+	Timer_t timer;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -105,9 +109,20 @@ int main(void)
   /* USER CODE BEGIN 2 */
   LED_Init(&led, GPIOC, GPIO_PIN_10);
 
+  LED_Init(&led_r, GPIOC, GPIO_PIN_12);
+
+
   MX_USART2_UART_Init();
 
   HAL_UART_Receive_IT(&huart2, &rxChar, 1);
+
+  Timer_Start(&timer, 2000);
+
+  char msg[50];
+
+  sprintf(msg, "start=%lu\r\n", timer.startTime);
+
+  uart_send(msg);
 
 
   //Button_Init(&button, GPIOC, GPIO_PIN_11);
@@ -123,6 +138,15 @@ int main(void)
 	  //Button_Update(&button);
 
 	  LED_Update(&led);
+
+	  LED_Update(&led_r);
+
+	  if(Timer_Expired(&timer))
+	  {
+		  uart_send("Timer expired\r\n");
+
+		  LED_On(&led);
+	  }
 
 	/* ButtonEvent_t event = Button_GetEvent(&button);
 
@@ -141,7 +165,7 @@ int main(void)
 
 	  if(commandReady)
 	  {
-		  command_processor(rxBuffer, &led);
+		  command_processor(rxBuffer, &led, &led_r);
 
 		  commandReady = 0;
 	  }
@@ -255,7 +279,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10|GPIO_PIN_12, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : B1_Pin */
   GPIO_InitStruct.Pin = B1_Pin;
@@ -270,8 +294,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PC10 */
-  GPIO_InitStruct.Pin = GPIO_PIN_10;
+  /*Configure GPIO pins : PC10 PC12 */
+  GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_12;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
