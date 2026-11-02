@@ -14,7 +14,12 @@ void Timer_Stop(Timer_t *timer)
 }
 uint8_t Timer_Expired(Timer_t *timer)
 {
-	if(timer->active && HAL_GetTick() - timer->startTime >= timer->timeout)
+	if(!timer->active)
+	{
+		return 0;
+	}
+
+	if(HAL_GetTick() - timer->startTime >= timer->timeout)
 		{
 			timer->active = 0;
 

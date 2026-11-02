@@ -15,6 +15,8 @@ void LED_Init(LED_t* led, GPIO_TypeDef* port, uint16_t pin)
 
 	led->blinkCount = 0;
 	led->currentBlink = 0;
+
+	Timer_Stop(&led->blinkTimer);
 }
 
 void LED_On(LED_t* led)
@@ -43,7 +45,7 @@ void LED_StartBlink(LED_t* led, uint32_t count, uint32_t interval)
 	led->currentBlink = 0;
 	led->blinking = 1;
 	led->blinkInterval = interval;
-	led->lastToggleTime = HAL_GetTick();
+	Timer_Start(&led->blinkTimer, interval);
 }
 
 void LED_StopBlink(LED_t* led)
@@ -55,16 +57,19 @@ void LED_Update(LED_t* led)
 {
 	if(led->blinking)
 	{
-		if(HAL_GetTick() - led->lastToggleTime >= led->blinkInterval)
+		if(Timer_Expired(&led->blinkTimer))
 		{
 			LED_Toggle(led);
-			led->lastToggleTime = HAL_GetTick();
 
 			led->currentBlink++;
 
 			if(led->currentBlink >= led->blinkCount)
 			{
 				led->blinking = 0;
+			}
+			else
+			{
+				Timer_Start(&led->blinkTimer, led->blinkInterval);
 			}
 		}
 	}

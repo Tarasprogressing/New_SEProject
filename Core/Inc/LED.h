@@ -1,21 +1,22 @@
 #ifndef LED_H
 #define LED_H
 
-#include "main.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include "main.h"
+#include "timer.h"
 
 typedef struct
 {
 	GPIO_TypeDef* GPIO_Port;
 	uint16_t GPIO_Pin;
 	uint16_t state;
-	uint32_t lastToggleTime;
 	uint32_t blinkInterval;
 	uint32_t blinking;
 	uint32_t blinkCount;
 	uint32_t currentBlink;
+	Timer_t blinkTimer;
 
 } LED_t;
 
