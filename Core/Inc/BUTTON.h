@@ -2,6 +2,8 @@
 #define BUTTON_H
 
 #include "main.h"
+#include "button.h"
+#include "timer.h"
 
 
 typedef enum
@@ -23,6 +25,9 @@ typedef struct
 	uint32_t pressDuration;
 	uint32_t releaseTime;
 	ButtonEvent_t buttonEvent;
+
+	Timer_t debounceTimer;
+	Timer_t longPressTimer;
 
 } Button_t;
 

@@ -27,7 +27,7 @@ Core/Src/cli.o: ../Core/Src/cli.c ../Core/Inc/CLI.h ../Core/Inc/main.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h \
- ../Core/Inc/LED.h ../Core/Inc/LED.h
+ ../Core/Inc/LED.h ../Core/Inc/timer.h ../Core/Inc/LED.h
 ../Core/Inc/CLI.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h:
@@ -59,4 +59,5 @@ Core/Src/cli.o: ../Core/Src/cli.c ../Core/Inc/CLI.h ../Core/Inc/main.h \
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h:
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h:
 ../Core/Inc/LED.h:
+../Core/Inc/timer.h:
 ../Core/Inc/LED.h:

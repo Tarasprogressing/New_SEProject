@@ -84,6 +84,7 @@ int main(void)
 	LED_t led;
 	LED_t led_r;
 	Timer_t timer;
+	Button_t button;
 
   /* USER CODE END 1 */
 
@@ -125,7 +126,7 @@ int main(void)
   uart_send(msg);
 
 
-  //Button_Init(&button, GPIOC, GPIO_PIN_11);
+  Button_Init(&button, GPIOC, GPIO_PIN_11);
 
   //LED_StartBlink(&led, 50, 200);
 
@@ -135,19 +136,25 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //Button_Update(&button);
+	 Button_Update(&button);
 
 	  LED_Update(&led);
 
 	  LED_Update(&led_r);
 
-	  if(Timer_Expired(&timer))
+	 /* if(Timer_Expired(&timer))
 	  {
 		  uart_send("Timer expired\r\n");
 
 		  LED_On(&led);
-	  }
+	  }*/
 
+	     ButtonEvent_t event = Button_GetEvent(&button);
+
+	     if(event == BUTTON_SHORT)
+	     {
+	         LED_Toggle(&led_r);
+	     }
 	/* ButtonEvent_t event = Button_GetEvent(&button);
 
 	  if(event == BUTTON_SHORT)

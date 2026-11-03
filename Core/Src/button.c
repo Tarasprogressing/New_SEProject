@@ -1,7 +1,7 @@
 #include "BUTTON.h"
 
-#define DEBOUNCE_TIME 50
-#define LONG_PRESS_TIME 1000
+//#define DEBOUNCE_TIME 50
+//#define LONG_PRESS_TIME 1000
 
 void Button_Init(Button_t* button, GPIO_TypeDef* button_port, uint16_t button_pin)
 {
@@ -22,7 +22,7 @@ void Button_Init(Button_t* button, GPIO_TypeDef* button_port, uint16_t button_pi
 	button->previousState = button->currentState;
 }
 
-void Button_Update(Button_t* button)
+/*void Button_Update(Button_t* button)
 {
 	 button->previousState = button->currentState;
 
@@ -30,39 +30,65 @@ void Button_Update(Button_t* button)
 
 		  if(!button->currentState && button->previousState)
 		  {
-			  HAL_Delay(DEBOUNCE_TIME);
 
-			  button->currentState = HAL_GPIO_ReadPin(button->GPIO_Port, button->GPIO_PIN);
+			  Timer_Start(&button->debounceTimer, 50);
 
-			  if(!button->currentState)
-			  {
-				  button->pressTime = HAL_GetTick();
-			  }
 		  }
+
+			  if(Timer_Expired(&button->debounceTimer))
+			  {
+
+				  button->currentState = HAL_GPIO_ReadPin(button->GPIO_Port, button->GPIO_PIN);
+
+				  /*if(!button->currentState)
+				  {
+					  button->pressTime = HAL_GetTick();
+				  }*/
+
+				/*  Timer_Start(&button->longPressTimer, 3000);
+			  }
+
 
 		  if(button->currentState && !button->previousState)
 		  {
-			  HAL_Delay(DEBOUNCE_TIME);
+			  Timer_Start(&button->debounceTimer, 50);
 
-			  button->currentState = HAL_GPIO_ReadPin(button->GPIO_Port, button->GPIO_PIN);
-
-			  if(button->currentState)
+			  if(Timer_Expired(&button->debounceTimer))
 			  {
-				  button->releaseTime = HAL_GetTick();
-			  }
 
-			  button->pressDuration = button->releaseTime - button->pressTime;
+				  button->currentState = HAL_GPIO_ReadPin(button->GPIO_Port, button->GPIO_PIN);
 
-			  if(button->pressDuration < LONG_PRESS_TIME)
-			  {
-				  button->buttonEvent = BUTTON_SHORT;
-			  }
-			  else
-			  {
-				  button->buttonEvent = BUTTON_LONG;
+				  /*if(button->currentState)
+				  {
+					  button->releaseTime = HAL_GetTick();
+				  }
 
-			  }
+				  button->pressDuration = button->releaseTime - button->pressTime;*/
+
+				/*  if(Timer_Expired(&button->longPressTimer))
+				  {
+					  button->buttonEvent = BUTTON_SHORT;
+				  }
+				  else
+				  {
+					  button->buttonEvent = BUTTON_LONG;
+
+				  }
+			   }
 		  }
+} */
+
+void Button_Update(Button_t* button)
+{
+	button->previousState = button->currentState;
+
+	button->currentState =
+	    HAL_GPIO_ReadPin(button->GPIO_Port, button->GPIO_PIN);
+
+	if(!button->currentState && button->previousState)
+	{
+	    button->buttonEvent = BUTTON_SHORT;
+	}
 }
 
 uint32_t Button_GetPressDuration(Button_t* button)
