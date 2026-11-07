@@ -144,6 +144,14 @@ int main(void)
 
 	  LED_Update(&led_r);
 
+	  char msg[32];
+
+	  sprintf(msg, "State=%lu\r\n", button.currentState);
+	  uart_send(msg);
+
+	  HAL_Delay(200);
+
+
 	 /* if(Timer_Expired(&timer))
 	  {
 		  uart_send("Timer expired\r\n");
@@ -151,33 +159,27 @@ int main(void)
 		  LED_On(&led);
 	  }*/
 
-	   /*  ButtonEvent_t event = Button_GetEvent(&button);
-
-	     if(event == BUTTON_SHORT)
-	     {
-	         LED_Toggle(&led_r);
-	     }*/
-	/* ButtonEvent_t event = Button_GetEvent(&button);
+	ButtonEvent_t event = Button_GetEvent(&button);
 
 	  if(event == BUTTON_SHORT)
 	  {
 		  uart_send("SHORT\r\n");
-		  LED_StopBlink(&led);
-		  LED_On(&led);
+		  LED_StopBlink(&led_r);
+		  LED_On(&led_r);
 	  }
 
 	  else if(event == BUTTON_LONG)
 	  {
 		  uart_send("LONG\r\n");
-		  LED_StartBlink(&led, 50, 200);
-	  }*/
+		  LED_StartBlink(&led_r, 50, 200);
+	  }
 
-	 /* if(commandReady)
+	 if(commandReady)
 	  {
 		  command_processor(rxBuffer, &led, &led_r);
 
 		  commandReady = 0;
-	  }*/
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -322,7 +324,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-/*void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 
 	if(huart->Instance == USART2)
@@ -343,9 +345,7 @@ static void MX_GPIO_Init(void)
 
 		HAL_UART_Receive_IT(&huart2, &rxChar, 1);
 	}
-}*/
-
-
+}
 
 /* USER CODE END 4 */
 

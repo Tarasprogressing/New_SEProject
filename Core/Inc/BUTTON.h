@@ -2,9 +2,8 @@
 #define BUTTON_H
 
 #include "main.h"
-#include "button.h"
 #include "timer.h"
-
+#include "CLI.h"
 
 typedef enum
 {
