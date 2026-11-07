@@ -53,6 +53,11 @@ void LED_StopBlink(LED_t* led)
 	led->blinking = 0;
 }
 
+void LED_StartInfiniteBlink(LED_t* led)
+{
+	led->infiniteBlink = 1;
+}
+
 void LED_Update(LED_t* led)
 {
 	if(led->blinking)
@@ -65,7 +70,14 @@ void LED_Update(LED_t* led)
 
 			if(led->currentBlink >= led->blinkCount)
 			{
+				if(!led->infiniteBlink)
+				{
 				led->blinking = 0;
+				}
+				else
+				{
+					Timer_Start(&led->blinkTmer, led->blinkInterval);
+				}
 			}
 			else
 			{

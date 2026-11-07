@@ -18,11 +18,9 @@ typedef struct
 	uint32_t blinking;
 	uint32_t blinkCount;
 	uint32_t currentBlink;
+	uint8_t infiniteBlink;
 
 	Timer_t blinkTmer;
-
-
-
 
 } LED_t;
 

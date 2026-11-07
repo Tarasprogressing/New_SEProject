@@ -4,4 +4,5 @@
 ../Core/Src/led.c:35:6:LED_Toggle	1
 ../Core/Src/led.c:40:6:LED_StartBlink	1
 ../Core/Src/led.c:51:6:LED_StopBlink	1
-../Core/Src/led.c:56:6:LED_Update	4
+../Core/Src/led.c:56:6:LED_StartInfiniteBlink	1
+../Core/Src/led.c:61:6:LED_Update	5

@@ -128,6 +128,10 @@ int main(void)
 
   Button_Init(&button, GPIOC, GPIO_PIN_11);
 
+  Timer_Start(&timer, 500);
+
+  LED_StartBlink(&led_r, 0, 500);
+
   //LED_StartBlink(&led, 50, 200);
 
   /* USER CODE END 2 */
@@ -138,8 +142,6 @@ int main(void)
   {
 	 Button_Update(&button);
 
-	  LED_Update(&led);
-
 	  LED_Update(&led_r);
 
 	 /* if(Timer_Expired(&timer))
@@ -149,12 +151,12 @@ int main(void)
 		  LED_On(&led);
 	  }*/
 
-	     ButtonEvent_t event = Button_GetEvent(&button);
+	   /*  ButtonEvent_t event = Button_GetEvent(&button);
 
 	     if(event == BUTTON_SHORT)
 	     {
 	         LED_Toggle(&led_r);
-	     }
+	     }*/
 	/* ButtonEvent_t event = Button_GetEvent(&button);
 
 	  if(event == BUTTON_SHORT)
@@ -170,12 +172,12 @@ int main(void)
 		  LED_StartBlink(&led, 50, 200);
 	  }*/
 
-	  if(commandReady)
+	 /* if(commandReady)
 	  {
 		  command_processor(rxBuffer, &led, &led_r);
 
 		  commandReady = 0;
-	  }
+	  }*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -320,7 +322,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+/*void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 
 	if(huart->Instance == USART2)
@@ -341,7 +343,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 		HAL_UART_Receive_IT(&huart2, &rxChar, 1);
 	}
-}
+}*/
+
+
 
 /* USER CODE END 4 */
 
