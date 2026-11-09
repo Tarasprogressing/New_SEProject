@@ -15,6 +15,9 @@ void LED_Init(LED_t* led, GPIO_TypeDef* port, uint16_t pin)
 
 	led->blinkCount = 0;
 	led->currentBlink = 0;
+
+	led->infiniteBlink = 0;
+
 	Timer_Stop(&led->blinkTmer);
 }
 
@@ -40,10 +43,18 @@ void LED_Toggle(LED_t* led)
 void LED_StartBlink(LED_t* led, uint32_t count, uint32_t interval)
 {
 	led->blinkCount = count * 2;
-
 	led->currentBlink = 0;
 	led->blinking = 1;
 	led->blinkInterval = interval;
+
+	if(count == 0)
+	{
+		led->infiniteBlink = 1;
+	}
+	else
+	{
+		led->infiniteBlink = 0;
+	}
 
 	Timer_Start(&led->blinkTmer, interval);
 }

@@ -28,6 +28,7 @@
 #include "BUTTON.h"
 #include "CLI.h"
 #include "timer.h"
+#include "app.h"
 
 /* USER CODE END Includes */
 
@@ -85,6 +86,10 @@ int main(void)
 	LED_t led_r;
 	Timer_t timer;
 	Button_t button;
+	App_t app;
+
+		app.led = &led;
+		app.button = &button;
 
   /* USER CODE END 1 */
 
@@ -130,9 +135,13 @@ int main(void)
 
   Timer_Start(&timer, 500);
 
-  LED_StartBlink(&led_r, 0, 500);
+  App_Init(&app);
 
-  //LED_StartBlink(&led, 50, 200);
+
+
+  //LED_StartBlink(&led_r, 0, 500);
+
+  //LED_StartBlink(&led, 0, 500);
 
   /* USER CODE END 2 */
 
@@ -140,17 +149,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	 Button_Update(&button);
+	  LED_Update(&led);
 
 	  LED_Update(&led_r);
 
-	  char msg[32];
-
-	  sprintf(msg, "State=%lu\r\n", button.currentState);
-	  uart_send(msg);
-
-	  HAL_Delay(200);
-
+	  App_Process(&app);
 
 	 /* if(Timer_Expired(&timer))
 	  {
@@ -159,19 +162,24 @@ int main(void)
 		  LED_On(&led);
 	  }*/
 
-	ButtonEvent_t event = Button_GetEvent(&button);
+	/*ButtonEvent_t event = Button_GetEvent(&button);
 
 	  if(event == BUTTON_SHORT)
 	  {
 		  uart_send("SHORT\r\n");
-		  LED_StopBlink(&led_r);
-		  LED_On(&led_r);
+		  LED_StopBlink(&led);
+		  LED_Off(&led);
+		  LED_StartBlink(&led_r, 0, 100);
 	  }
 
 	  else if(event == BUTTON_LONG)
 	  {
 		  uart_send("LONG\r\n");
-		  LED_StartBlink(&led_r, 50, 200);
+
+		  LED_StopBlink(&led_r);
+		  LED_Off(&led_r);
+
+		  LED_StartBlink(&led, 0, 100);
 	  }
 
 	 if(commandReady)
@@ -179,7 +187,8 @@ int main(void)
 		  command_processor(rxBuffer, &led, &led_r);
 
 		  commandReady = 0;
-	  }
+	  } */
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
