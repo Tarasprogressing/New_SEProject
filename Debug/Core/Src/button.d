@@ -27,7 +27,8 @@ Core/Src/button.o: ../Core/Src/button.c ../Core/Inc/BUTTON.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_pwr_ex.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h \
- ../Core/Inc/timer.h ../Core/Inc/CLI.h ../Core/Inc/LED.h
+ ../Core/Inc/timer.h ../Core/Inc/CLI.h ../Core/Inc/LED.h \
+ ../Core/Inc/app.h ../Core/Inc/BUTTON.h
 ../Core/Inc/BUTTON.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h:
@@ -61,3 +62,5 @@ Core/Src/button.o: ../Core/Src/button.c ../Core/Inc/BUTTON.h \
 ../Core/Inc/timer.h:
 ../Core/Inc/CLI.h:
 ../Core/Inc/LED.h:
+../Core/Inc/app.h:
+../Core/Inc/BUTTON.h:

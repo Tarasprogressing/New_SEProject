@@ -3,7 +3,6 @@
 
 #include "main.h"
 #include "timer.h"
-#include "CLI.h"
 
 typedef enum
 {

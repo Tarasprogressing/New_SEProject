@@ -155,6 +155,8 @@ int main(void)
 
 	  App_Process(&app);
 
+	  command_processor(rxBuffer, &app);
+
 	 /* if(Timer_Expired(&timer))
 	  {
 		  uart_send("Timer expired\r\n");

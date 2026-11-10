@@ -33,34 +33,34 @@ void App_Process(App_t *app)
 
 	if(app->currentState != app->previousState)
 	{
-	if(app->currentState == SYSTEM_LED_OFF)
-	{
-		LED_StopBlink(app->led);
-		LED_Off(app->led);
-		uart_send("OFF\r\n");
-	}
+
+		if(app->currentState == SYSTEM_LED_OFF)
+		{
+			LED_StopBlink(app->led);
+			LED_Off(app->led);
+
+		app->previousState = app->currentState;
+	     }
 	else if(app->currentState == SYSTEM_LED_ON)
 	{
 		LED_StopBlink(app->led);
 		LED_On(app->led);
-		uart_send("ON\r\n");
 	}
+
 	else if(app->currentState == SYSTEM_LED_BLINK)
 	{
 		 LED_StartBlink(app->led, 0, 500);
 	}
+		app->previousState = app->currentState;
+}
+}
 
-	app->currentState = app->previousState;
-	}
-	/*else if(app->currentState == SYSTEM_LED_BLINK)
-	{
-		LED_StartBlink(app->led, 0, 500);
-		uart_send("BLINK\r\n");
-	}*/
+void App_SetState(App_t *app, SystemState_t state)
+{
+	app->currentState = state;
+}
 
-	else if(app->currentState == SYSTEM_LED_BLINK)
-	{
-	    LED_Toggle(app->led);
-	    HAL_Delay(500);
-	}
+SystemState_t App_GetState(App_t *app)
+{
+	return app->currentState;
 }

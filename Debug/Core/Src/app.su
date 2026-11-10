@@ -1,2 +1,4 @@
 ../Core/Src/app.c:6:6:App_Init	16	static
 ../Core/Src/app.c:14:6:App_Process	24	static
+../Core/Src/app.c:58:6:App_SetState	16	static
+../Core/Src/app.c:63:15:App_GetState	16	static

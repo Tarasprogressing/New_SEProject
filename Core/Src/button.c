@@ -1,4 +1,5 @@
 #include "BUTTON.h"
+#include "CLI.h"
 
 void Button_Init(Button_t* button, GPIO_TypeDef* button_port, uint16_t button_pin)
 {
@@ -31,22 +32,22 @@ void Button_Update(Button_t* button)
 
 			  button->pressTime = HAL_GetTick();
 
-			  uart_send("PRESS\r\n");
+			  //uart_send("PRESS\r\n");
 		  }
 
 		  if(button->currentState && !button->previousState)
 		  {
-			  	  uart_send("RELEASE\r\n");
+			  	  //uart_send("RELEASE\r\n");
 
 				if(Timer_Expired(&button->longPressTimer))
 				  {
 					  button->buttonEvent = BUTTON_LONG;
-					  uart_send("LONG EVENT\r\n");
+					  //uart_send("LONG EVENT\r\n");
 				  }
 				  else
 				  {
 					  button->buttonEvent = BUTTON_SHORT;
-					  uart_send("SHORT EVENT\r\n");
+					  //uart_send("SHORT EVENT\r\n");
 				  }
 			   }
 		  }

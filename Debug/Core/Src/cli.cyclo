@@ -1,2 +1,2 @@
 ../Core/Src/cli.c:10:6:uart_send	1
-../Core/Src/cli.c:15:6:command_processor	28
+../Core/Src/cli.c:15:6:command_processor	5
