@@ -1,4 +1,4 @@
 ../Core/Src/app.c:6:6:App_Init	1
 ../Core/Src/app.c:14:6:App_Process	7
-../Core/Src/app.c:58:6:App_SetState	1
-../Core/Src/app.c:63:15:App_GetState	1
+../Core/Src/app.c:59:6:App_SetState	1
+../Core/Src/app.c:64:15:App_GetState	1

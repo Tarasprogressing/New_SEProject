@@ -31,6 +31,8 @@ void App_Process(App_t *app)
 
 	/* Обробка поточного стану */
 
+	char msg[64];
+
 	if(app->currentState != app->previousState)
 	{
 
@@ -38,9 +40,8 @@ void App_Process(App_t *app)
 		{
 			LED_StopBlink(app->led);
 			LED_Off(app->led);
-
-		app->previousState = app->currentState;
 	     }
+
 	else if(app->currentState == SYSTEM_LED_ON)
 	{
 		LED_StopBlink(app->led);

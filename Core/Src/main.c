@@ -155,42 +155,14 @@ int main(void)
 
 	  App_Process(&app);
 
-	  command_processor(rxBuffer, &app);
-
-	 /* if(Timer_Expired(&timer))
+	  if(commandReady)
 	  {
-		  uart_send("Timer expired\r\n");
 
-		  LED_On(&led);
-	  }*/
-
-	/*ButtonEvent_t event = Button_GetEvent(&button);
-
-	  if(event == BUTTON_SHORT)
-	  {
-		  uart_send("SHORT\r\n");
-		  LED_StopBlink(&led);
-		  LED_Off(&led);
-		  LED_StartBlink(&led_r, 0, 100);
-	  }
-
-	  else if(event == BUTTON_LONG)
-	  {
-		  uart_send("LONG\r\n");
-
-		  LED_StopBlink(&led_r);
-		  LED_Off(&led_r);
-
-		  LED_StartBlink(&led, 0, 100);
-	  }
-
-	 if(commandReady)
-	  {
-		  command_processor(rxBuffer, &led, &led_r);
+		  command_processor(rxBuffer, &app);
 
 		  commandReady = 0;
-	  } */
 
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
