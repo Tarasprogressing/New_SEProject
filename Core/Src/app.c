@@ -31,8 +31,6 @@ void App_Process(App_t *app)
 
 	/* Обробка поточного стану */
 
-	char msg[64];
-
 	if(app->currentState != app->previousState)
 	{
 
