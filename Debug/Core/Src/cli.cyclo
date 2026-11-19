@@ -1,6 +1,6 @@
-../Core/Src/cli.c:8:13:Cmd_LedOn	1
-../Core/Src/cli.c:14:13:Cmd_LedOff	1
-../Core/Src/cli.c:20:13:Cmd_Blink	1
-../Core/Src/cli.c:26:13:Cmd_Status	4
-../Core/Src/cli.c:55:6:uart_send	1
-../Core/Src/cli.c:60:6:command_processor	8
+../Core/Src/cli.c:7:6:uart_send	1
+../Core/Src/cli.c:12:13:Cmd_LedOn	1
+../Core/Src/cli.c:18:13:Cmd_LedOff	1
+../Core/Src/cli.c:24:13:Cmd_Blink	1
+../Core/Src/cli.c:30:13:Cmd_Status	4
+../Core/Src/cli.c:64:6:command_processor	7

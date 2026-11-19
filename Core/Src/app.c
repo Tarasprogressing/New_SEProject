@@ -10,7 +10,6 @@ void App_Init(App_t *app)
 		LED_Off(app->led);
 }
 
-
 void App_Process(App_t *app)
 {
 	Button_Update(app->button);
@@ -48,7 +47,7 @@ void App_Process(App_t *app)
 
 	else if(app->currentState == SYSTEM_LED_BLINK)
 	{
-		 LED_StartBlink(app->led, 0, 500);
+		 LED_StartBlink(app->led, app->blinkCount, app->blinkDelay);
 	}
 		app->previousState = app->currentState;
 }
@@ -62,4 +61,13 @@ void App_SetState(App_t *app, SystemState_t state)
 SystemState_t App_GetState(App_t *app)
 {
 	return app->currentState;
+}
+
+void App_StartBlink(App_t *app, uint32_t count, uint32_t delay)
+{
+	app->blinkCount = count;
+	app->remainingBlink = count;
+	app->blinkDelay = delay;
+
+	App_SetState(app, SYSTEM_LED_BLINK);
 }

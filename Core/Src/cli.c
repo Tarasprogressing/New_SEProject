@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include "LED.h"
 
+void uart_send(const char* msg)
+{
+	HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
+}
 
 static void Cmd_LedOn(App_t *app)
 {
@@ -50,53 +54,80 @@ typedef struct
 
 } Command_t;
 
-
-
-void uart_send(const char* msg)
+Command_t commandsTable[] =
 {
-	HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-}
+		{"led on", Cmd_LedOn},
+		{"led off", Cmd_LedOff},
+		{"status", Cmd_Status}
+};
 
 void command_processor(char* cmd, App_t *app)
 {
+	 uart_send("CMD=");
+	 uart_send(cmd);
+	 uart_send("\r\n");
 
-	if(strcmp(cmd, "led on") == 0)
+	if(strncmp(cmd, "blink", 5) == 0)
+		{
+		 uart_send("ENTER BLINK\r\n");
+			char *arg1;
+			char *arg2;
+			char *arg3;
+
+			arg1 = strtok(cmd, " ");
+			arg2 = strtok(NULL, " ");
+			arg3 = strtok(NULL, " ");
+
+			if(arg1 == NULL || arg2 == NULL || arg3 == NULL)
+			{
+				uart_send("Invalid command\r\n");
+				return;
+			}
+
+			int cnt = atoi(arg2);
+			int delay = atoi(arg3);
+
+			app->blinkCount = cnt;
+			app->blinkDelay = delay;
+
+			App_StartBlink(app, app->blinkCount, app->blinkDelay);
+
+			uart_send("Blink Started \r\n");
+
+			return;
+
+			if(cnt < 1 || cnt > 10)
+			{
+				uart_send("Invalid the first parameter\r\n");
+				return;
+			}
+
+			if(delay < 10 || delay > 5000)
+			{
+				uart_send("Invalid second parameter\r\n");
+				return;
+			}
+
+			uart_send("Blink started\r\n");
+			return;
+			}
+
+	uint32_t commandCount = sizeof(commandsTable) / sizeof(commandsTable[0]);
+
+	for(uint32_t i = 0; i < commandCount; i++)
 	{
-		Cmd_LedOn(app);
+		if(strcmp(cmd, commandsTable[i].name) == 0)
+		{
+			commandsTable[i].handler(app);
+			return;
+		}
 	}
 
-	else if(strcmp(cmd, "led off") == 0)
-	{
-		Cmd_LedOff(app);
+	uart_send("Unknown command\r\n");
+
+
 	}
 
-	else if(strcmp(cmd, "status") == 0)
-	{
-		Cmd_Status(app);
-	}
 
-	else if(strcmp(cmd, "blink") == 0)
-	{
-		Cmd_Blink(app);
-	}
 
-	else if(strcmp(cmd, "help") == 0)
-	{
-		uart_send("Available commands:\r\n"
-					"help\r\n"
-					"status\r\n"
-					"led on\r\n"
-					"led off\r\n"
-					"blink\r\n");
-	}
 
-	else if(strcmp(cmd, "version") == 0)
-	{
-		uart_send("Firmware v1.0\r\n");
-	}
-
-	else if(strcmp(cmd, "Up time") == 0)
-	{
-		uart_send("12 s\r\n");
-	}
-}
