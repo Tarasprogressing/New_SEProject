@@ -21,12 +21,6 @@ static void Cmd_LedOff(App_t *app)
 	uart_send("LED OFF\r\n");
 }
 
-static void Cmd_Blink(App_t *app)
-{
-	App_SetState(app, SYSTEM_LED_BLINK);
-	uart_send("LED BLINK\r\n");
-}
-
 static void Cmd_Status(App_t *app)
 {
 	SystemState_t state = App_GetState(app);
@@ -54,18 +48,47 @@ typedef struct
 
 } Command_t;
 
+static void Cmd_LedOn(App_t *app);
+static void Cmd_LedOff(App_t *app);
+static void Cmd_Status(App_t *app);
+static void Cmd_Version(App_t *app);
+static void Cmd_Help(App_t *app);
+static void Cmd_Uptime(App_t *app);
+
 Command_t commandsTable[] =
 {
 		{"led on", Cmd_LedOn},
 		{"led off", Cmd_LedOff},
-		{"status", Cmd_Status}
+		{"status", Cmd_Status},
+		{"version", Cmd_Version},
+		{"help", Cmd_Help},
+		{"uptime", Cmd_Uptime}
+
 };
+
+static void Cmd_Version(App_t *app)
+{
+	uart_send("Version: 3; \r\n");
+}
+
+static void Cmd_Help(App_t *app)
+{
+    uart_send("Available commands: \r\n led on; \r\n led off; \r\n status; \r\n help; \r\n version; \r\n uptime \r\n");
+
+}
+
+static void Cmd_Uptime(App_t *app)
+{
+	unsigned long uptimeSec = HAL_GetTick() / 1000;
+	char msg[50];
+	sprintf(msg, "Uptime: %lu seconds;\r\n", uptimeSec);
+	uart_send(msg);
+
+}
+
 
 void command_processor(char* cmd, App_t *app)
 {
-	 uart_send("CMD=");
-	 uart_send(cmd);
-	 uart_send("\r\n");
 
 	if(strncmp(cmd, "blink", 5) == 0)
 		{

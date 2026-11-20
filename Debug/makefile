@@ -61,7 +61,7 @@ main-build: New_SEProject.elf secondary-outputs
 
 # Tool invocations
 New_SEProject.elf New_SEProject.map: $(OBJS) $(USER_OBJS) C:\CubeMX\New_SEProject\STM32F303RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "New_SEProject.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\CubeMX\New_SEProject\STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="New_SEProject.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "New_SEProject.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\CubeMX\New_SEProject\STM32F303RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="New_SEProject.map" -Wl,--gc-sections -static -z noexecstack --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

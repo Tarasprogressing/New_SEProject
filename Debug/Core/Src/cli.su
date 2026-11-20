@@ -1,6 +1,8 @@
 ../Core/Src/cli.c:7:6:uart_send	16	static
 ../Core/Src/cli.c:12:13:Cmd_LedOn	16	static
 ../Core/Src/cli.c:18:13:Cmd_LedOff	16	static
-../Core/Src/cli.c:24:13:Cmd_Blink	16	static
-../Core/Src/cli.c:30:13:Cmd_Status	24	static
-../Core/Src/cli.c:64:6:command_processor	48	static
+../Core/Src/cli.c:24:13:Cmd_Status	24	static
+../Core/Src/cli.c:69:13:Cmd_Version	16	static
+../Core/Src/cli.c:74:13:Cmd_Help	16	static
+../Core/Src/cli.c:80:13:Cmd_Uptime	72	static
+../Core/Src/cli.c:90:6:command_processor	48	static
