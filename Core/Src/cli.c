@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "LED.h"
 
+uint32_t commandsCount = 0;
+
 void uart_send(const char* msg)
 {
 	HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
@@ -73,8 +75,13 @@ static void Cmd_Version(App_t *app)
 
 static void Cmd_Help(App_t *app)
 {
-    uart_send("Available commands: \r\n led on; \r\n led off; \r\n status; \r\n help; \r\n version; \r\n uptime \r\n");
+	commandsCount = sizeof(commandsTable) / sizeof(commandsTable[0]);
 
+   for(int i = 0; i < commandsCount; i++)
+   {
+	   uart_send(commandsTable[i].name);
+	   uart_send("\r\n");
+   }
 }
 
 static void Cmd_Uptime(App_t *app)

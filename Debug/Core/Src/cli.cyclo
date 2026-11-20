@@ -1,8 +1,8 @@
-../Core/Src/cli.c:7:6:uart_send	1
-../Core/Src/cli.c:12:13:Cmd_LedOn	1
-../Core/Src/cli.c:18:13:Cmd_LedOff	1
-../Core/Src/cli.c:24:13:Cmd_Status	4
-../Core/Src/cli.c:69:13:Cmd_Version	1
-../Core/Src/cli.c:74:13:Cmd_Help	1
-../Core/Src/cli.c:80:13:Cmd_Uptime	1
-../Core/Src/cli.c:90:6:command_processor	7
+../Core/Src/cli.c:9:6:uart_send	1
+../Core/Src/cli.c:14:13:Cmd_LedOn	1
+../Core/Src/cli.c:20:13:Cmd_LedOff	1
+../Core/Src/cli.c:26:13:Cmd_Status	4
+../Core/Src/cli.c:71:13:Cmd_Version	1
+../Core/Src/cli.c:76:13:Cmd_Help	2
+../Core/Src/cli.c:87:13:Cmd_Uptime	1
+../Core/Src/cli.c:97:6:command_processor	7
